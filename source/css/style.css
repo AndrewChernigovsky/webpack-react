@@ -1,0 +1,10 @@
+.container {
+    padding-bottom: 2rem;
+    background-color: blue;
+    min-width: 400px;
+    min-height: 500px;
+}
+
+h1 {
+    text-align: center;
+}

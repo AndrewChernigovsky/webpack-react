@@ -6,7 +6,7 @@ module.exports = {
     context: path.resolve(__dirname, 'source'),
     mode: 'development',
     entry: {
-        main: './js/index.js',
+        main: './index.js',
         analytics: './js/analitycs.js'
     },
     output: {
@@ -18,5 +18,17 @@ module.exports = {
             template: './index.html', inject: 'body'
         }),
         new CleanWebpackPlugin()
-    ]
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.{png|jpg|svg|gif}$/,
+                use: ['file-loader']
+            }
+        ]
+    }
 }

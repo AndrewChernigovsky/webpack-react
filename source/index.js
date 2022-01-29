@@ -1,4 +1,5 @@
-import Post from "./post"
+import Post from "./js/post"
+import './css/style.css'
 
 const post = new Post ('Webpack post title')
 
