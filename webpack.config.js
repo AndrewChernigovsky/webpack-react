@@ -1,9 +1,11 @@
 const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
-const target = process.env.NODE_ENV === "build" ? "browserslist" : "web";
+const isDev = process.env.NODE_ENV === 'development'
+console.log ('IS DEV:', isDev)
 
 module.exports = {
     context: path.resolve(__dirname, 'source'),
@@ -34,6 +36,7 @@ module.exports = {
         historyApiFallback: true,
         static: path.resolve(__dirname, "build"),
         open: true,
+        hot: isDev,
         compress: true,
         liveReload: false,
         port: 4200,
@@ -43,7 +46,17 @@ module.exports = {
             template: './index.html', inject: 'body'
         }),
         new CleanWebpackPlugin(),
-        new MiniCssExtractPlugin()
+        new MiniCssExtractPlugin(),
+
+
+        new CopyWebpackPlugin({
+            patterns: [
+              { 
+                from: path.resolve(__dirname, 'source/favicon.ico'),
+                to:  path.resolve(__dirname, 'build') 
+                },
+            ],
+        }),
     ],
     module: {
         rules: [
@@ -54,12 +67,12 @@ module.exports = {
             {
                 test: /\.(s[ac]|c)ss$/i,
                 use: [
-                  MiniCssExtractPlugin.loader,
-                  "css-loader",
-                  "postcss-loader",
-                  "sass-loader",
+                    MiniCssExtractPlugin.loader,
+                    "css-loader",
+                    "postcss-loader",
+                    "sass-loader",
                 ],
-              },
+            },
             {
                 test: /.(png|jpe?g|gif|svg|webp|woff|woff2|ttf|eot|ico)$/,
                 type: 'asset/resource'
