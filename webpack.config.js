@@ -1,8 +1,9 @@
 const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
-const webpack = require('webpack')
-const {HotModuleReplacementPlugin} = require('hot-module-replacement')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+const target = process.env.NODE_ENV === "build" ? "browserslist" : "web";
 
 module.exports = {
     context: path.resolve(__dirname, 'source'),
@@ -16,7 +17,7 @@ module.exports = {
         path: path.resolve(__dirname, 'build')
     },
     resolve: {
-        extensions: ['.js', '.json', '.png'],
+        extensions: ['.js', '.jsx', '.json', '.png', '.scss'],
         alias: {
             '@models': path.resolve(__dirname, 'source/models'),
             '@': path.resolve(__dirname, 'source'),
@@ -27,20 +28,22 @@ module.exports = {
             chunks: 'all'
         }
     },
+    target: "web",
+    devtool: "source-map",
     devServer: {
         historyApiFallback: true,
-        static: path.resolve(__dirname, './build'),
+        static: path.resolve(__dirname, "build"),
         open: true,
         compress: true,
-        hot: true,
-        port: 8080,
+        liveReload: false,
+        port: 4200,
     },
     plugins: [
         new HTMLWebpackPlugin({
             template: './index.html', inject: 'body'
         }),
         new CleanWebpackPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
+        new MiniCssExtractPlugin()
     ],
     module: {
         rules: [
@@ -48,6 +51,15 @@ module.exports = {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader']
             },
+            {
+                test: /\.(s[ac]|c)ss$/i,
+                use: [
+                  MiniCssExtractPlugin.loader,
+                  "css-loader",
+                  "postcss-loader",
+                  "sass-loader",
+                ],
+              },
             {
                 test: /.(png|jpe?g|gif|svg|webp|woff|woff2|ttf|eot|ico)$/,
                 type: 'asset/resource'
@@ -59,7 +71,11 @@ module.exports = {
             {
                 test: /\.csv$/,
                 use: ['csv-loader']
-            }
-        ],
-    },
+            },
+            {
+                test: /\.(js|jsx)?$/,
+                use: ['babel-loader'],
+            },
+        ]
+    }
 };

@@ -1,5 +1,5 @@
 @import '~normalize.css';
-@import 'fonts.css';
+@import 'fonts.scss';
 
 body {
     font-family: 'Dongle', sans-serif;
@@ -23,8 +23,12 @@ h1 {
     width: 500px;
     margin: 0 auto;
     height: 200px;
+
+    &__idem {
+        color: red;
+    }
 }
 
 .code {
-    color: hotpink;
+    color: rgb(255, 0, 0);
 }

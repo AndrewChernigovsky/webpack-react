@@ -1,6 +1,6 @@
 import * as $ from 'jquery'
 import Post from '@models/post'
-import './css/style.css'
+import './sass/style.scss'
 import webpackLogo from './img/webpack2.png'
 // import xml from './data.xml'
 // import csv from './trees.csv'
