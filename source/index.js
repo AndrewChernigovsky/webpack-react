@@ -1,15 +1,17 @@
 import * as $ from 'jquery'
 import Post from '@models/post'
-import json from './jsonFile.json'
 import './css/style.css'
 import webpackLogo from './img/webpack2.png'
-import xml from './data.xml'
+// import xml from './data.xml'
+// import csv from './trees.csv'
+// import json from './jsonFile.json'
 
 const post = new Post ('Webpack post title', webpackLogo)
 
-$('pre').html(post.toString())
+$('pre').addClass('code').html(post.toString())
 
 console.log('Post to String:', post.toString())
 
-console.log('JSON:', json)
-console.log('XML:', xml)
+// console.log('JSON:', json)
+// console.log('XML:', xml)
+// console.log('CSV:', csv)

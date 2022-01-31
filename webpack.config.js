@@ -1,6 +1,8 @@
 const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
+const webpack = require('webpack')
+const {HotModuleReplacementPlugin} = require('hot-module-replacement')
 
 module.exports = {
     context: path.resolve(__dirname, 'source'),
@@ -20,11 +22,25 @@ module.exports = {
             '@': path.resolve(__dirname, 'source'),
         }
     },
+    optimization: {
+        splitChunks: {
+            chunks: 'all'
+        }
+    },
+    devServer: {
+        historyApiFallback: true,
+        static: path.resolve(__dirname, './build'),
+        open: true,
+        compress: true,
+        hot: true,
+        port: 8080,
+    },
     plugins: [
         new HTMLWebpackPlugin({
             template: './index.html', inject: 'body'
         }),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
     ],
     module: {
         rules: [
@@ -39,6 +55,10 @@ module.exports = {
             {
                 test: /\.xml$/,
                 use: ['xml-loader']
+            },
+            {
+                test: /\.csv$/,
+                use: ['csv-loader']
             }
         ],
     },
