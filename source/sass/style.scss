@@ -1,6 +1,8 @@
 @import '~normalize.css';
 @import 'fonts.scss';
 
+$ds: 300px;
+
 body {
     font-family: 'Dongle', sans-serif;
     font-size: 1.2rem;
@@ -22,7 +24,7 @@ h1 {
     background-size: cover;
     width: 500px;
     margin: 0 auto;
-    height: 200px;
+    height: $ds;
 
     &__idem {
         color: red;
