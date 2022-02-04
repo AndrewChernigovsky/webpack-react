@@ -5,3 +5,9 @@ async function start() {
 const unused = 42
 
 start().then(console.log)
+
+class Util {
+    static id = Date.now()
+}
+
+console.log('Util Id:', Util.id)
