@@ -5,7 +5,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const TerserWebpackPlugin = require('terser-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const EslintWebpack = require('eslint-webpack-plugin')
 
 const isDev = process.env.NODE_ENV === 'development'
 const isProd = !isDev
@@ -51,10 +50,6 @@ const jsLoaders = () => {
             options: babelOptions()
         }
     ]
-
-    if (isDev) {
-        loaders.push('eslint-loader')
-    }
 
     return loaders
 }   
